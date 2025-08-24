@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../../styles/output.css">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+
+  <title>Frontend Mentor | Fylo data storage component</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet">
+
+  <style>
+
+
+    .bit {
+      width: 0;
+      height: 0;
+      border-bottom: 50px solid transparent;
+      border-right: 50px solid white;
+      transform: translate(-42px, -10px);
+    }
+
+    #gb {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 12px;
+      border-radius: 6px;
+      background: linear-gradient(to right, hsl(6, 100%, 80%) 0%, hsl(335, 100%, 65%) 0%, #ddd 0%);
+      outline: none;
+    }
+
+    /* Track (for Chrome/Edge) */
+    #gb::-webkit-gbRange-runnable-track {
+      height: 12px;
+      border-radius: 6px;
+      background: transparent;
+      /* handled by JS */
+    }
+
+    #gb::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 13px;
+      height: 13px;
+      border-radius: 50%;
+      background: #fff;
+      cursor: pointer;
+
+    }
+
+    .borderright {
+      border-top-right-radius: 80px;
+    }
+  </style>
+</head>
+
+<body class="min-h-screen bg-[#0c122c]">
+  <main class="flex lg:flex-row flex-col justify-center items-center gap-3 w-full lg:w-auto mx-auto min-h-screen">
+
+    <section class="bg-[#1d2b68] flex flex-col p-5   pr-10 rounded-lg  borderright">
+      <div class="p-4"><img src="./images/logo.svg" alt="logo"></div>
+      <div class="flex flex-row gap-5 ">
+        <div class="bg-[#0c122c] rounded-lg p-3 mx-1"><img src="./images/icon-document.svg" alt="icon-document"></div>
+        <div class="bg-[#0c122c] rounded-lg p-3 mx-1"><img src="./images/icon-folder.svg" alt="icon-folder"></div>
+        <div class="bg-[#0c122c] rounded-lg p-3 mx-1"><img src="./images/icon-upload.svg" alt="icon-upload"></div>
+      </div>
+    </section>
+    <section class="p-5 bg-[#1d2b68] flex flex-col rounded-xl">
+      <div class="flex flex-row justify-between">
+        <p class="text-white">You’ve used <span class="font-bold"><output id="gigabyte">815</output>GB</span> of your
+          storage
+        </p>
+        <p class="bg-white rounded-xl lg:block hidden px-5 pt-2 text-blue-900 z-1 font-bold translate-x-2 -translate-y-10"
+          id="gbleft">
+          185 GB Left</p>
+        <span class=" bit hidden lg:block "></span>
+      </div>
+      <input type="range" min="0" max="1000" id="gb" value="815" title="storage" step="5"
+        oninput="gigabyte.value = gb.value" class="m-2">
+      <div class="flex justify-between pb-5">
+        <p class="text-white font-bold">0 GB</p>
+        <p class="text-white font-bold">1000 GB</p>
+      </div>
+
+    </section>
+
+    <p class="bg-white lg:hidden rounded-xl p-5 text-blue-900 w-fit font-bold mx-auto -translate-y-10" id="gbleft">
+      185 GB Left</p>
+
+  </main>
+  <img src="./images/bg-desktop.png" alt="" class="absolute bottom-0 w-full left-0 right-0 hidden lg:block -z-2">
+  <img src="./images/bg-mobile.png" alt="" class="absolute bottom-0 w-full left-0 right-0 block lg:hidden -z-2">
+  <footer>
+    <div style="bottom: 0%; left: 0%; width: 100%; font-size: small; color: white; text-align: center;">
+      Challenge by
+      <a href="https://www.frontendmentor.io?ref=challenge" target="_blank" rel="noopener">
+        Frontend Mentor
+      </a>.
+      Coded by
+      <a href="https://github.com/Dineshwar-2501">Dineshwar-2501</a>.
+  </footer>
+</body>
+<script>
+  let gbused = document.querySelector('#gigabyte').value;
+  let gbleft = document.querySelector('#gbleft');
+  let gbRange = document.querySelector('#gb');
+  function update() {
+    gbused = gbRange.value;
+    gbleft.textContent = `${1000 - Number(gbRange.value)} GB Left`
+  }
+
+  gbRange.addEventListener("input", update);
+
+  update();
+
+
+
+  function updateSlider() {
+    let val = (gbRange.value / gbRange.max) * 100;
+    gbRange.style.background = `linear-gradient(to right, hsl(6,100%,80%) 0%, hsl(335,100%,65%) ${val}%, rgb(21, 30, 73) ${val}%)`;
+  }
+
+
+  updateSlider();
+  gbRange.addEventListener("input", updateSlider);
+
+</script>
+
+</html>
